@@ -1,5 +1,5 @@
 import React from 'react'
-import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import { Routes, Route } from 'react-router-dom'
 import { HomePage, LoginPage, RegisterPage, AccountPage, ProjectPage, ProjectsPage, NotFoundPage } from '../Pages'
 import { UsersPage } from '../Pages/Admin'
 import { MainLayout } from '../Layouts'
@@ -12,7 +12,7 @@ import routes from '../Helpers/Routes'
 export default function AppRouter() {
   return (
     
-    <BrowserRouter>
+    // <BrowserRouter>
       <Routes>
         <Route element={<MainLayout />}>
 
@@ -26,8 +26,6 @@ export default function AppRouter() {
             <Route path={routes.account} element={<AccountPage />} />
             <Route path={routes.projects} element={<ProjectsPage />} />
             <Route path={routes.project()} element={<ProjectPage />} />
-           { console.log(routes.project())}
-
 
             <Route element={<RolRoutes hasRole={roles.admin} />}>
               <Route path={routes.admin.users} element={<UsersPage />} />
@@ -38,6 +36,6 @@ export default function AppRouter() {
           <Route path="*" element={<NotFoundPage />} />
         </Route>
       </Routes>
-    </BrowserRouter> 
+    // </BrowserRouter> 
   )
 }

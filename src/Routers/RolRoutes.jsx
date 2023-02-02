@@ -1,14 +1,17 @@
 import React from "react";
-import { Navigate, Outlet } from "react-router-dom";
+import { Navigate, Outlet, useLocation} from "react-router-dom";
 import UseAuth from "../Auth/UseAuth";
+import routes from "../Helpers/Routes";
 
 
 
 const RolRoutes = ({hasRole : role}) => {
-  const { user } = UseAuth();
 
 
-  if (role && user.role !== role) return <Navigate to="/login" />
+  const { hasRole } = UseAuth();
+
+
+  if (role && !hasRole(role)) return <Navigate to={routes.home} />
 
   return (
     <Outlet />

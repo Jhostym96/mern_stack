@@ -5,7 +5,7 @@ const routes = {
     account: '/account',
     projects: '/projects',
 
-    project: (projectId) => (projectId ? `/projects/:${projectId}` : '/project/:projectId'),
+    project: (projectId) => (projectId ? `/projects/:${projectId}` : '/projects/:projectId'),
 
     admin: {
         users: '/admin/users'
