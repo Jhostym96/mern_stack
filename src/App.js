@@ -7,7 +7,7 @@ function App() {
   return (
     <div>
       <AuthProvider>
-      <AppRouter />
+        <AppRouter />
       </AuthProvider>
     </div>
   );

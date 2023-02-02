@@ -3,25 +3,41 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import { HomePage, LoginPage, RegisterPage, AccountPage, ProjectPage, ProjectsPage, NotFoundPage } from '../Pages'
 import { UsersPage } from '../Pages/Admin'
 import { MainLayout } from '../Layouts'
-import { AuthRoutes } from './AuthRoutes'
+import PrivateRoutes from './PrivateRoutes'
+import PublicRoutes from './PublicRoutes'
+import RolRoutes from './RolRoutes'
+import roles from '../Helpers/Roles'
+import routes from '../Helpers/Routes'
 
 export default function AppRouter() {
   return (
+    
     <BrowserRouter>
       <Routes>
         <Route element={<MainLayout />}>
-          <Route path="/login" element={<LoginPage />} />
-          <Route path="/register" element={<RegisterPage />} />
-          <Route element={<AuthRoutes />}>
-            <Route path="/" element={<HomePage />} />
-            <Route path="/account" element={<AccountPage />} />
-            <Route path="/projects" element={<ProjectsPage />} />
-            <Route path="/project/:projectId" element={<ProjectPage />} />
-            <Route path="/admin/users" element={<UsersPage />} />
+
+          <Route element={<PublicRoutes />}>
+            <Route path={routes.login} element={<LoginPage />} />
+            <Route path={routes.register} element={<RegisterPage />} />
           </Route>
+
+          <Route element={<PrivateRoutes />}>
+            <Route path={routes.home} element={<HomePage />} />
+            <Route path={routes.account} element={<AccountPage />} />
+            <Route path={routes.projects} element={<ProjectsPage />} />
+            <Route path={routes.project()} element={<ProjectPage />} />
+           { console.log(routes.project())}
+
+
+            <Route element={<RolRoutes hasRole={roles.admin} />}>
+              <Route path={routes.admin.users} element={<UsersPage />} />
+            </Route>
+
+          </Route>
+
           <Route path="*" element={<NotFoundPage />} />
         </Route>
       </Routes>
-    </BrowserRouter>
+    </BrowserRouter> 
   )
 }
