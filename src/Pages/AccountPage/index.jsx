@@ -1,20 +1,22 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { Col, Container, Row, Card, Button } from 'react-bootstrap'
 import UseAuth from '../../Auth/UseAuth'
 import ChangePasswordModal from '../../Components/ModalAccount/ChangePasswordModal';
 import DeleteModal from '../../Components/ModalAccount/DeleteModal';
+import EditModal from '../../Components/ModalAccount/EditModal';
+import UseModal from '../../Hooks/UseModal';
 
 export default function AccountPage() {
 
   const { user } = UseAuth();
 
-  const [isOpenDeleteModal, setIsOpenDeleteModal] = useState(false);
-  const openDeleteModal = () => setIsOpenDeleteModal(true);
-  const closeDeleteModal = () => setIsOpenDeleteModal(false);
+  const [isOpenDeleteModal, openDeleteModal, closeDeleteModal] = UseModal()
 
-  const [isOpenChangePasswordModal, setIsOpenChangePasswordModal] = useState(false);
-  const openChangePasswordModal = () => setIsOpenChangePasswordModal(true);
-  const closeChangePasswordModal = () => setIsOpenChangePasswordModal(false);
+  const [isOpenChangePasswordModal, openChangePasswordModal, closeChangePasswordModal] = UseModal()
+
+  const [isOpenEditModal, openEditModal, closeEditModal] = UseModal()
+
+
 
 
   return (
@@ -38,7 +40,7 @@ export default function AccountPage() {
               <p className='text-center'><b>Nombre:</b>{user.name}</p>
               <p className='text-center'><b>Email:</b>{user.email}</p>
               <p className='text-center'><b>Tipo de usuario:</b>{user.role}</p>
-              <Button variant='warning'>Editar cuenta</Button>
+              <Button variant='warning' onClick={openEditModal}>Editar cuenta</Button>
               <Button variant='link' className='mt-1' onClick={openChangePasswordModal}>Cambiar contraseña</Button>
               <Button variant='link' className='mt-3 text-danger' onClick={openDeleteModal}>Eliminar cuenta</Button>
             </Card>
@@ -51,9 +53,14 @@ export default function AccountPage() {
         isOpen={isOpenDeleteModal}
         close={closeDeleteModal}
       />
-          <ChangePasswordModal
+      <ChangePasswordModal
         isOpen={isOpenChangePasswordModal}
         close={closeChangePasswordModal}
+      />
+      <EditModal
+        isOpen={isOpenEditModal}
+        close={closeEditModal}
+        user={user}
       />
     </>
   )
