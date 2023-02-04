@@ -4,6 +4,7 @@ import UseAuth from '../../Auth/UseAuth'
 import ChangePasswordModal from '../../Components/ModalAccount/ChangePasswordModal';
 import DeleteModal from '../../Components/ModalAccount/DeleteModal';
 import EditModal from '../../Components/ModalAccount/EditModal';
+import ProfilePicModal from '../../Components/ModalAccount/ProfilePicModal';
 import UseModal from '../../Hooks/UseModal';
 
 export default function AccountPage() {
@@ -16,6 +17,9 @@ export default function AccountPage() {
 
   const [isOpenEditModal, openEditModal, closeEditModal] = UseModal()
 
+  const [isOpenProfilePicModal, openProfilePicModal, closeProfilePicModal] = UseModal()
+
+
 
 
 
@@ -25,13 +29,15 @@ export default function AccountPage() {
         <Row className='mt-4'>
           <Col xs={12} className="text-center">
             <img
-              src="/img/male_avatar.svg"
+              src={user?.profilePic || "/img/male_avatar.svg"}
               alt="profile"
+              onClick={openProfilePicModal}
               style={{
                 width: '200px',
                 height: '200px',
                 borderRadius: '50%',
-                objectFit: 'cover'
+                objectFit: 'cover',
+                cursor: 'pointer'
               }}
             />
           </Col>
@@ -62,6 +68,12 @@ export default function AccountPage() {
         close={closeEditModal}
         user={user}
       />
+            <ProfilePicModal
+        isOpen={isOpenProfilePicModal}
+        close={closeProfilePicModal}
+        user={user}
+      />
+
     </>
   )
 }

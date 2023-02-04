@@ -13,7 +13,7 @@ export default function AuthProvider({ children }) {
   // const [user, setUser] = useState({ id: 1, role: roles.regular })
 
   const login = (userCredentials, fromLocation) => {
-    setUser({ id: 1, name: 'Jhostym Rosas', email: 'jhosrohe27@gmail.com', role: roles.regular });
+    setUser({ id: 1, name: 'Jhostym Rosas', email: 'jhosrohe27@gmail.com', role: roles.admin });
     if (fromLocation) {
       navigate(fromLocation, { replace: true })
     }
@@ -21,11 +21,20 @@ export default function AuthProvider({ children }) {
 
   const logout = () => setUser(null);
 
+  const updateUser = (data) => {
+    setUser({
+      ...user,
+      ...data
+    })
+  }
+
+
   const isLogged = () => !!user;
   const hasRole = (role) => user?.role === role;
 
   const contextValue = {
     user,
+    updateUser,
     isLogged,
     hasRole,
     login,

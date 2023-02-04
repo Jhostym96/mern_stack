@@ -1,5 +1,6 @@
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup'
+import roles from '../Helpers/Roles';
 
 const schema = yup.object().shape({
   name: yup
@@ -13,8 +14,7 @@ const schema = yup.object().shape({
 
   role: yup
     .string("")
-    .required("Debe seleccionar su rol")
-    .oneOf(["regular", "admin"])
+    .oneOf(Object.keys(roles),"Seleccion invalida")
 })
 
 export default yupResolver(schema)

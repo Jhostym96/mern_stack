@@ -1,5 +1,5 @@
 import React from 'react'
-import { Navbar, Nav, NavDropdown, Button } from 'react-bootstrap'
+import { Navbar, Nav, NavDropdown } from 'react-bootstrap'
 import { NavLink } from 'react-router-dom'
 import routes from '../../Helpers/Routes'
 import useAuth from '../../Auth/UseAuth'
@@ -7,9 +7,12 @@ import useAuth from '../../Auth/UseAuth'
 
 export default function NavBar() {
 
-  const { logout } = useAuth();
 
-  console.log(logout)
+  const { logout, user } = useAuth();
+
+  console.log(user)
+
+
 
   return (
     <Navbar collapseOnSelect expand="lg" variant="dark" bg="dark" className='p-2'>
@@ -26,10 +29,10 @@ export default function NavBar() {
         </Nav>
 
         <Nav>
-          <Nav.Link as={NavLink} to={routes.login}>Iniciar Sesion</Nav.Link>
-          <Nav.Link as={NavLink} to={routes.register}>Registro</Nav.Link>
+          <Nav.Link as={NavLink} to={routes.login} hidden={user}>Iniciar Sesion</Nav.Link>
+          <Nav.Link as={NavLink} to={routes.register} hidden={user}>Registro</Nav.Link>
           <Nav.Link as={NavLink} to={routes.account}>Mi cuenta</Nav.Link>
-          <Nav.Link onClick={logout} >Cerrar sesion</Nav.Link>
+          <Nav.Link onClick={logout} hidden={!user}>Cerrar sesion</Nav.Link>
         </Nav>
       </Navbar.Collapse>
     </Navbar>

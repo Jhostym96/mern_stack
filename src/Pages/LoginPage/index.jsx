@@ -9,8 +9,6 @@ export default function LoginPage() {
 
   const location = useLocation();
 
-  console.log(location);
-
   const { login } = UseAuth();
 
 

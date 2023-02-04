@@ -1,7 +1,7 @@
 import './App.css';
 import AppRouter from './Routers/AppRouter';
-import 'bootstrap/dist/css/bootstrap.min.css';
 import AuthProvider from './Auth/AuthProvider';
+import { ToastContainer } from 'react-toastify';
 
 import { BrowserRouter } from 'react-router-dom';
 
@@ -13,6 +13,7 @@ function App() {
           <AppRouter />
         </AuthProvider>
       </BrowserRouter>
+      <ToastContainer />
     </div>
   );
 }

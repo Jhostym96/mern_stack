@@ -1,14 +1,22 @@
 import { useEffect } from 'react';
 import { Modal, Form, Button, Alert } from 'react-bootstrap'
 import { useForm } from 'react-hook-form'
+import UseAuth from '../../Auth/UseAuth';
+import roles from '../../Helpers/Roles';
 import EditAccountResolver from '../../Validations/EditAccountResolver';
 
 export default function EditModal({ isOpen, close, user }) {
 
-  const { register, handleSubmit, formState: { errors }, reset } = useForm({ resolver: EditAccountResolver });
+  const { register, handleSubmit, formState: { errors, dirtyFields }, reset } = useForm({ resolver: EditAccountResolver });
+
+  const { updateUser, hasRole } = UseAuth()
+
+  const isDirty = !!Object.keys(dirtyFields).length;      
 
   const onSubmit = (formData) => {
-    alert("Cambiando contraseña")
+    if(!isDirty) return
+    updateUser(formData)
+    close()
   }
 
   useEffect(() => {
@@ -58,9 +66,9 @@ export default function EditModal({ isOpen, close, user }) {
 
           <Form.Group>
             <Form.Label>Rol</Form.Label>
-            <Form.Control as="select" {...register("role")}>
-              <option>regular</option>
-              <option>admin</option>
+            <Form.Control as="select" disabled={!hasRole('admin')} {...register("role")}>
+              {Object.keys(roles).map(role => (<option key={role}>{role}</option>))}
+              <option>no existe</option>
             </Form.Control>
             {errors?.role && (
               <Form.Text>
@@ -75,7 +83,7 @@ export default function EditModal({ isOpen, close, user }) {
       </Modal.Body>
       <Modal.Footer>
         <Button variant='secondary' onClick={close}>Cancelar</Button>
-        <Button variant='primary' onClick={handleSubmit(onSubmit)}>Actualizar datos</Button>
+        <Button variant='primary' disabled={!isDirty} onClick={handleSubmit(onSubmit)}>Actualizar datos</Button>
       </Modal.Footer>
     </Modal>
   )
